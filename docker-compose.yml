@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_USER: kamil
+      POSTGRES_DB: test
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    ports:
+      - 18080:8080
+
+volumes:
+  db-data: # named volumes can be managed easier using docker-compose
